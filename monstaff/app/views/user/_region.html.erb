@@ -1,0 +1,13 @@
+<div id="new_task">
+<%= form_for :region, url: region_path, remote: true do |u| %>
+<%#= form_for @regionNew, remote: true do |u| %>
+<p>
+    <%= u.label :name, 'Имя Региона' %><br>
+</p>
+<p>
+ <%= u.text_field :name %>
+  </p>
+ <%= u.submit "Добавить"%>
+<% end %>
+
+</div>

@@ -1,0 +1,53 @@
+<%= stylesheet_link_tag    'graphics'%>
+<div class="container">
+    <div class="span5 fill">
+
+<div id="calendar">
+<div id="graphlink" style="margin: 1% 0% 3% 25%;">
+<%= form_tag graphics_month_path, :method => 'get' do %>
+  <p>
+
+<%= select_tag :region, options_for_select(User.select(:region_id).group(:region_id).collect{ |u| [u.region.name, u.region_id]}), {:prompt => "Выберите ЦОА"}%>
+<%= submit_tag "Выбрать", :name => nil %>
+  </p>
+<%# end %>
+
+
+</div>
+<%#= f.select "post", "state", User.all.collect {|s| [s.region, s.id]}, :onchange => "subm" %>
+
+
+<div id="articles">
+<h2 id="month">
+    <%= link_to "<", date: @date.prev_month, :region => params[:region] %>
+    <%= @date.strftime("%B %Y") %>
+    <%= link_to ">", date: @date.next_month , :region => params[:region]%>
+  </h2>
+
+
+<%= calendar do |date| %>
+<%#= date %>
+<%= link_to date.day, graphics_path({:date => date}) %>
+
+<% if @graphics_by_date[date.to_s] %>
+
+        <% @graphics_by_date[date.to_s].each do |article| %>
+          <div id="workday"><li><%= link_to article.userfio(article.engname),
+user_path(User.select("id").where(fullname: article.engname).map(&:id)) %>
+<%= link_to 'x', graphic_path(article) ,
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %><br>
+<span style="font-size: 7pt; padding-left: 25%;">(<%= article.worktime%>)</span>
+</li></div>
+
+      <% end %>
+
+    <% end %>
+<% end %>
+<% end %>
+</div>
+
+</div>
+
+</div>
+</div>

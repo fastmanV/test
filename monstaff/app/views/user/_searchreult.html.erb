@@ -1,0 +1,47 @@
+<% @user.each do |users|%>
+
+ <tr id="my<%= users.id%>">
+                                    <td >
+                                        
+                                        <%= link_to users.fullname, user_path(users) %>
+                                        
+                                    </td>
+                                    <td><%= users.phone%></td>
+                                    <td class="text-center">
+                                        
+                                    </td>
+                                    <td>
+                                        <%= users.mail %>
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <%= link_to user_path(users) , :class=>"table-link" 	do%>
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        <% end %>
+                                        <%= link_to edit_user_path(users, :update => "1") , :class=>"table-link", remote: true 	do%>
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        <% end %>
+                                        <% if current_user.present? && user_can_del %>
+                                        <%= link_to user_path(users), method: :delete,data: { confirm: 'Вы уверены?' }, remote: true, :class=>"table-link danger " do%>
+                                        
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        <% end %>
+                                        <% end %>
+                                       	
+                                    </td>
+
+                                </tr>
+                                <tr id="<%= users.id%>" class="edit_test">
+                                	
+
+                                </tr>
+<% end%>
+

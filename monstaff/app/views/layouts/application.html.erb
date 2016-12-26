@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monstaff</title>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'bootstrap'%>
+
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Monstaff</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active">
+<li><%= link_to "График", graphics_path %> </li>
+<li><%= link_to "Календарь", graphics_month_path %></li> 
+<li><%= link_to "Отпуска", user_vacation_path %> </li>
+ <li><%= link_to "Добавитьграфик", new_graphic_path %></li>
+  <li><%= link_to "Список сотрудников", user_index_path %></li>
+   <li><%= link_to "Регистрация", new_user_path %></li>
+
+<li>
+             <a class=" dropdown-toggle " data-toggle="dropdown" href="#">
+                     
+                    <span >Мониторниг</span><span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><%= link_to "Добавить тех. работы", transport_path%><span class="icon-wrench"></span></li>
+              
+
+                   <li> <%= link_to "Разделение колец", managerings_path%>
+<span class="icon-wrench"></span></li>
+                   
+                    <li><%= link_to "Топология(beta)", topology_path %><span class="icon-wrench"></span></li>
+                    <li><span class="icon-trash"></span> </li>
+                </ul>
+</li>
+
+
+
+ </ul>
+<% if current_user %>
+<ul class="nav navbar-nav navbar-right" style="padding-right: 1%;">
+<div class="span2" style="padding-top: 3%; ">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+                     
+                    <span class="icon-cog icon-white" style="padding-right: 5%;"><%= current_user.fullname %></span><span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><%= link_to "Профиль", user_path(current_user)%><span class="icon-wrench"></span></li>
+              
+
+                   <li> <%= link_to_permission(xlss_path, 'xlss')%>
+<span class="icon-wrench"></span></li>
+                   <li> <%= link_to_permission(controll_path, 'Админка')%>
+<span class="icon-wrench"></span></li>
+                   
+                    <li><%= link_to "Выход", logout_path %><span class="icon-wrench"></span></li>
+                    <li><span class="icon-trash"></span> </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </ul>
+
+ 
+<% else %>
+
+
+
+
+
+<% end %>
+   </div>
+  </div>
+</nav>
+
+<%= yield %>
+
+
+
+
+<div class="navbar-bottom row-fluid">
+      <div class="navbar-inner">
+          <div class="container">
+          build 1.0 (21.08.2016), © v.sinugin@o3.ua 
+          </div>
+          </div>
+          </div>
+</body>
+</html>

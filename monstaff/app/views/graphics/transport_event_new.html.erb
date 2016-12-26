@@ -1,0 +1,93 @@
+<%= javascript_include_tag "graphics.js"%>
+<style>
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+
+</style>
+<div class="container">
+    <div class="span5 fill">
+<%= form_for :transport, :url => transport_path , :html => {:class=>"form-horizontal"} do |newtr| %>
+
+  <div class="form-group">
+
+    <%= newtr.label :transportname, "Кто проводит работы", :class=> "col-md-4 control-label" %>
+     <div class="col-md-4">
+    <%= newtr.text_field :transportname, :class=>"form-control input-md" %>
+  </div>
+</div>
+
+<div class="form-group">
+ <%= newtr.label :event_start, "Дата начала работ",  :class=> "col-md-4 control-label" %> 
+ <div class="col-md-4">
+ <%= newtr.text_field :event_start,  :class=>"vacs form-control input-md vacs"%>
+</div>
+</div>
+<div class="form-group">
+<%= newtr.label :event_end	, "время начала",  :class=> "col-md-4 control-label" %>
+<div class="col-md-4">
+<%= newtr.text_field :time_start, :class=>"form-control input-md"%>
+</div>
+</div>
+
+<div class="form-group">
+<%= newtr.label :event_end  , "время окончания",  :class=> "col-md-4 control-label" %>
+<div class="col-md-4">
+<%= newtr.text_field :time_end, :class=>"form-control input-md"%>
+</div>
+</div>
+
+
+<div class="form-group">
+    <%= newtr.label :text, "Описание", :class=> "col-md-4 control-label" %>
+     <div class="col-md-4">
+    <%= newtr.text_area :text, :class=>"form-control input-md" %>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="signup"></label>
+  <div class="col-md-4">
+    <%= newtr.submit "Добавить", :id=>"signup", :class=>"btn btn-info"%>
+  </div>
+</div>
+
+	<% end %>
+
+
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Список работ.
+</button>
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Список всех работ.</h4>
+            </div>
+            <div class="modal-body">
+   <% TransportEvent.all.each do |event| %>
+<div class='alert alert-info'>
+    Работы <%= event.transportname%><br>  Время проведения: <%= event.event_start %>  c <%= event.start_time %> до <%= event.end_time %>. <br>
+   <%= event.text %>  
+  </div>
+   <% end %>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+    </div>
+</div>

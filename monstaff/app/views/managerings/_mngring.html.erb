@@ -1,0 +1,70 @@
+<fieldset>
+<!-- Form Name -->
+<legend>Разделение менеджмента</legend>
+
+
+
+
+</fieldset>
+
+<div id="result"></div>
+<hr>
+<div class="container bootstrap snippet">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box no-header clearfix">
+                <div class="main-box-body clearfix">
+                    <div class="table-responsive">
+                        <table class="table user-list">
+                            <thead>
+                                <tr>
+                                <th style="width: 15%;"><span>Старая IP</span></th>
+                                <th style="width: 15%;"><span>Новая IP</span></th>
+                               
+                                <th style="width: 14%;display: none;" class="oldvlan"><span>Старый vlan</span></th>
+                                <th style="width: 14%;"><span>Новый vlan</span></th>
+                                <th style="width: 15%;"><span>Новый радиус ключ</span></th>
+                                <th style="width: 15%;">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <%= form_for :mngsw, url: managerings_path, :html => {:class=>"form-horizontal"}, remote: true do |u| %>
+                                <tr id="">
+                                    <td >
+                                        
+                                       <%= u.text_field :old_ip, :id=> "old_ip", :class=>"form-control input-md" %>
+                                        
+                                    </td>
+                                    <td><%= u.text_field :new_ip, :class=>"form-control input-md"  %>
+                                    </td>
+                                    <td class="oldvlan" style='display: none'>
+                                      <%= u.text_field :old_vlan, :class=>"form-control input-md"  %>
+                                    </td>
+
+                                    <td >
+                                      <%= u.text_field :new_vlan, :class=>"form-control input-md"  %>
+                                    </td>
+
+                                    <td>
+                                         <%= u.text_field :new_radius, :class=>"form-control input-md"  %>
+                                    </td>
+                                    <td >
+                                  
+                                   <%= u.submit "Go", :id=>"signup", :class=>"btn btn-info"%>     
+                                    </td>
+
+                                </tr>
+                             
+
+                          <% end %>
+                        
+                            </tbody>
+
+                        </table>
+                        <%= check_box_tag 'role_ids' %> - нажмите если требуется указать старый влан(Обязательно для моделей Linksys )
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

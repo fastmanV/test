@@ -1,0 +1,75 @@
+
+
+
+<%= javascript_include_tag "graphics.js"%>
+<div class="container">
+    <div class="span5 fill">
+
+<% if current_user %>
+<%= form_for :graphics, url: graphics_path, :html => {:class=>"form-horizontal"} do |f| %>
+<fieldset>
+<legend>Добавление дежурства</legend>
+<% if @graphics.errors.any? %>
+<div id="error">
+<ul>
+<% @graphics.errors.full_messages.each do |err| %>
+ <li><%= err%> </li>
+<% end %>
+</ul>
+</div>
+<% end %>
+
+
+
+
+
+<div class="form-group">
+<%= f.label :engname, 'Выберите инженера',  :class=> "col-md-4 control-label"%>
+<div class="col-md-4">
+<%= f.select :engname, (select_user_list),{ :prompt => "Выберите инженера"}, :class=>"form-control"%>
+</div>
+</div>
+
+
+
+
+
+<div class="form-group">
+    <%= f.label :worktime, 'Рабочие часы *',  :class=> "col-md-4 control-label" %>
+<div class="col-md-4">
+  <%= f.text_field :worktime , :class=>"form-control input-md" %>
+
+</div>
+</div>
+<div class="form-group">
+    <%= f.label :comment, 'Комментарий',  :class=> "col-md-4 control-label" %>
+<div class="col-md-4">
+  <%= f.text_field :comment, :class=>"form-control input-md" %>
+
+</div>
+</div>
+<div class="form-group">
+<%= f.label :date, 'Дата *',  :class=> "col-md-4 control-label" %>
+<div class="col-md-4">
+<%= f.text_field :date, :class => 'datepickers form-control input-md' %>
+</div>
+</div>
+    <div class="form-group">
+  <label class="col-md-4 control-label" for="signup"></label>
+  <div class="col-md-4">
+    <%= f.submit "Добавить", :id=>"signup", :class=>"btn btn-info"%>
+  </div>
+</div>
+
+<% end %>
+
+<% else %>
+
+Пожалуйста авторизируйтесь
+
+</fieldset>
+<%end %>
+
+
+</div>
+</div>

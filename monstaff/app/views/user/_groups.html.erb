@@ -1,0 +1,43 @@
+
+
+
+<% @group.each do |group| %>
+<div class="panel panel-primary">
+<div class="panel-heading"><%= group.name%></div>
+
+ <div class="panel-body">
+
+
+
+<% group.GroupPermission.each do |group_perm| %>
+
+<%= form_for group_perm, :url => group_permission_path do |g|%>
+<%= g.label :read, 'read' %>  
+<%= g.check_box :read %> |
+<%= g.label :write, 'write' %>
+<%= g.check_box :write %> |
+<%= g.label :remove, 'remove' %> 
+<%= g.check_box :remove %> |
+<%= g.text_field :url_path %> |
+<%= g.submit "go" %>
+<% end %>
+
+<% end %>
+
+
+
+<%= form_for :group_permission, :url => group_permission_path, remote: true do |g|%>
+<%= g.label :read, 'read' %> 
+<%= g.check_box :read %> |
+<%= g.label :write, 'write' %> 
+<%= g.check_box :write %> |
+<%= g.label :remove, 'remove' %> 
+<%= g.check_box :remove %> |
+<%= g.text_field :url_path %> |
+<%= g.hidden_field :group_id, :value => group.id %>
+<%= g.submit "go" %>
+<% end %>
+</div>
+ </div>
+<% end %>
+

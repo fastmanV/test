@@ -1,0 +1,244 @@
+<%= javascript_include_tag "graphics.js"%>
+<style>
+
+.checkbox label:after, 
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
+}
+
+</style>
+<div class="container">
+    <div class="span5 fill">
+
+
+<%= form_for @user, method: :patch, :html => {:class=>"form-horizontal"}, remote: false do |f| %>
+<fieldset>
+<!-- Form Name -->
+<legend>Обновление профиля</legend>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+
+    <%= f.label :fullname, "Ф.И.О.", :class=> "col-md-4 control-label" %>
+     <div class="col-md-4">
+    <%= f.text_field :fullname, :class=>"form-control input-md" %>
+  </div>
+</div>
+
+
+<%= f.hidden_field :pass_valid, :value => current_user.passactive %>
+  
+
+  <div class="form-group">
+    <%= f.label :phone, "Телефон", :class=> "col-md-4 control-label" %>
+    <div class="col-md-4">
+    <%= f.text_field :phone , :class=>"form-control input-md"%>
+    </div>
+</div>
+
+ <div class="form-group">
+    <%= f.label :mail, "Почта", :class=> "col-md-4 control-label"%>
+    <div class="col-md-4">
+    <%= f.text_field :mail, :class=>"form-control input-md" %>
+ 
+   </div>
+</div>
+<% if current_user.group.name == "admin" %>
+
+<div class="form-group">
+<%= f.label :region_id, 'ЦОА *',  :class=> "col-md-4 control-label"%>
+  <div class="col-md-4">
+<%= f.select :region_id, (Region.all.collect{|u| [u.name, u.id]}),{ :prompt => "ЦОА"},  :class=>"form-control"%>
+
+  </div>
+</div>
+
+<div class="form-group">
+<%= f.label :reset_pass, "Сбросить пароль",  :class=> "col-md-4 control-label"%>  
+<div class="col-md-4">
+<%= f.check_box :reset_pass %>
+ </div>
+</div>
+
+<div class="form-group">
+<%= label :reset_pass, "Редактировать права",  :class=> "col-md-4 control-label"%>  
+<div class="col-md-4">
+<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">...</button>
+ </div>
+</div>
+
+
+<div class="form-group">
+
+<%= f.label :group_id, "Группа", :class=> "col-md-4 control-label"%>
+  <div class="col-md-4">
+<%= f.select :group_id, (Group.all.collect{|g| [g.name, g.id]}),{ :prompt => "#{@user.group.name if @user.group != nil}"}, :class=>"form-control"%>
+
+</div>
+</div>
+<% end %>
+<div class="form-group">
+ <%= f.label :vacstart, "Начало отпуска",  :class=> "col-md-4 control-label" %> 
+ <div class="col-md-4">
+ <%= f.text_field :vacstart,  :class=>"vacs form-control input-md"%>
+</div>
+</div>
+<div class="form-group">
+<%= f.label :vacend, "Конец отпуска",  :class=> "col-md-4 control-label" %>
+<div class="col-md-4">
+<%= f.text_field :vacend, :class=>"vacs form-control input-md"%>
+</div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="signup"></label>
+  <div class="col-md-4">
+    <%= f.submit "Изменить", :id=>"signup", :class=>"btn btn-info"%>
+  </div>
+</div>
+    
+<% end %>
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Редактировать права пользователя</h4>
+        </div>
+        <div class="modal-body">
+          
+
+
+
+ <%= form_for @user , :url => permission_path do |ya| %>
+<% @user.UserPermission.each do |perm|%>
+
+<%= form_for  perm , :html => {:id => 'form#{perm.id}'}, :method => 'POST' do |t|%>
+
+
+<%= t.label :region_id , perm.region.name %> :
+<%= t.label :read, 'read' %> 
+<%= t.check_box :read %> |
+<%= t.label :write, 'write' %> 
+<%= t.check_box :write %> |
+<%= t.label :remove, 'remove' %> 
+<%= t.check_box :remove %> |
+<%= t.hidden_field :reg_id, :value => perm.region_id %>
+<%= t.hidden_field :u_id, :value => perm.user_id %>
+
+<%= ya.submit "go" %><br>
+<% end %>
+
+<% end %>
+
+<% end %>
+
+
+
+
+
+<% @region.each do |region| %>
+<%if @user.UserPermission.map(&:region_id).include? (region.id.to_s)%>
+
+<% else %>
+<%= form_for :perm, :url => permission_path do |huy| %>
+
+<%= huy.label :comment, region.name %> | 
+
+<%= huy.label :read, 'read' %> 
+<%= huy.check_box :read %> |
+<%= huy.label :write, 'write' %> 
+<%= huy.check_box :write %> |
+<%= huy.label :remove, 'delete' %> 
+<%= huy.check_box :remove %> | 
+<%= huy.hidden_field :reg_id, :value => region.id %>
+<%= huy.hidden_field :u_id, :value => @user.id %>
+
+
+<%= huy.submit "go" %>
+<% end %>
+  <% end %>
+  <% end %>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+</div>
+</div>

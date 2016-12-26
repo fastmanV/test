@@ -1,0 +1,5 @@
+
+<%= form_for region, remote: true do |f| %>
+<%= region.id %>
+<%= region.name %> 	| <%= link_to "(удалить)", :controller => 'user', :action => 'RegDel', :id => region.id, remote: true%><br>
+<% end %>

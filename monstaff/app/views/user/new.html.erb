@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="span5 fill">
+
+
+<%= form_for :user, url: user_index_path, :html => {:class=>"form-horizontal"} do |u| %>
+<fieldset>
+<!-- Form Name -->
+<legend>Регистрация</legend>
+<% if @user.errors.any? %>
+<div id="error">
+<ul>
+<% @user.errors.full_messages.each do |err| %>
+ <li><%= err%> </li>
+<% end %>
+</ul>
+</div>
+<% end %>
+
+
+
+<div class="form-group">
+    <%= u.label :secondname, 'Фамилия *', :class=> "col-md-4 control-label" %>
+    <div class="col-md-4">
+<%= u.text_field :secondname, :id=> "name", :class=>"form-control input-md" %>
+</div>
+</div>
+<div class="form-group">
+    <%= u.label :name, 'Имя *', :class=> "col-md-4 control-label" %>
+<div class="col-md-4">
+    <%= u.text_field :name, :class=>"form-control input-md"  %>
+</div>
+</div>
+
+<div class="form-group">
+    <%= u.label :phone, 'Номер телефона *', :class=> "col-md-4 control-label" %>
+
+  <div class="col-md-4">
+ <%= u.text_field :phone, :class=>"form-control input-md"  %>
+ </div>
+</div>
+<div class="form-group">
+    <%= u.label :mail, 'Почта *',  :class=> "col-md-4 control-label"%>
+<div class="col-md-4">
+ <%= u.text_field :mail, :class=>"form-control input-md"  %>
+
+  </div>
+</div>
+<div class="form-group">
+<%= u.label :region_id, 'ЦОА *',  :class=> "col-md-4 control-label"%>
+  <div class="col-md-4">
+<%= u.select :region_id, (Region.all.collect{|u| [u.name, u.id]}),{ :prompt => "ЦОА"}, :class=>"form-control"%>
+
+ </div>
+</div>
+
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="signup"></label>
+  <div class="col-md-4">
+    <%= u.submit "Добавить", :id=>"signup", :class=>"btn btn-info"%>
+  </div>
+</div>
+
+
+
+</fieldset>
+<% end %>
+
+
+
+</div>
+</div>

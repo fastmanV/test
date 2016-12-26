@@ -1,0 +1,39 @@
+<td >
+<%= link_to user.fullname, user_path(user) %>
+</td>
+
+
+<td style="width: 30%;"><%= user.phone   %>
+</td>
+
+<td class="text-center" >
+</td>
+
+<td >
+<%= user.mail   %>
+</td>
+
+<td style="width: 20%;">
+                                        <%= link_to user_path(user) , :class=>"table-link" 	do%>
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        <% end %>
+                                        <%= link_to edit_user_path(user) , :class=>"table-link", remote: true 	do%>
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        <% end %>
+                                        <% if current_user.present? && current_user.group.name == 'admin' %>
+                                        <%= link_to user_path(user), method: :delete,data: { confirm: 'Вы уверены?' }, :class=>"table-link danger " do%>
+                                        
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        <% end %>
+                                        <% end %>
+                                       	
+                                    </td>

@@ -1,0 +1,72 @@
+<%= stylesheet_link_tag    'graphics'%>
+
+
+
+<div class="container">
+    <div class="span5 fill">
+
+
+<br><br>
+<div class="container-fluid well span6">
+	<div class="row-fluid">
+        
+        
+        <div class="span8">
+            <h3><%= @user.fullname %></h3>
+            <h6>Почта:<%= @user.mail %></h6>
+            <h6>ЦОА:<%= @user.region.name %></h6>
+            <h6>Телефон:<%= @user.phone %></h6>
+            
+        </div>
+        
+        <div class="span2">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+                    + 
+                    <span class="icon-cog icon-white"></span><span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><%= link_to 'Редактировать профиль', edit_user_path(@user) %><span class="icon-wrench"></span></li>
+                    <li><span class="icon-trash"></span> </li>
+                </ul>
+            </div>
+        </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<br>                               Рабочие дни:
+<div id="articles">
+
+<%= calendar do |date| %>
+
+<%= date.day %>
+<% if @user.graphic.group_by(&:date)[date.to_s] %>
+<% @user.graphic.group_by(&:date)[date.to_s].each do |mm, graph|%>
+Рабочий день<br>
+<%# if current_user.group.name == "admin" %>
+<%= link_to_delete(graphic_path(mm.id), 'Удалить') %>
+<%#= link_to "Удалить", graphic_path(mm.id) , method: :delete, data: { confirm: 'Вы уверены?' } %>
+<%# else  %>
+<%# end %>
+
+<% end %>
+<% end %>
+<% end %>
+
+</div>
+
+
+
+
+
+</div>
+</div>

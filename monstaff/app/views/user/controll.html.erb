@@ -1,0 +1,89 @@
+<%= javascript_include_tag "user.js"%>
+<%= javascript_include_tag "graphics.js"%>
+
+<div class="container">
+    <div class="span5 fill">
+<button id="1">Регионы</button>
+
+<div id="region" style="display: none">
+<div class="tasks" id="incomplete_tasks">
+<%=  render @region %>
+<%#= link_to "Новый регион", controll_path, class: "new_link", :remote => true %>
+</div>
+<%#= link_to "Добавить регион", controll_path, id: "new_link", :remote => true %>
+
+<div id="new_task">
+<%= form_for :region, url: region_path, remote: true do |u| %>
+<%#= form_for @regionNew, remote: true do |u| %>
+<p>
+    <%= u.label :name, 'Имя Региона' %><br>
+</p>
+<p>
+ <%= u.text_field :name %>
+  </p>
+ <%= u.submit "Добавить"%>
+<% end %>
+
+</div>
+</div>
+
+
+<br><button id="2">Группы</button>
+<div id="group" style="display: none">
+<div id="tasks">
+<%= render @group %>
+</div>
+<div id="new_group">
+<%= form_for Group.new, remote: true do |g| %>
+<%#= form_for @groupNew, remote: true do |g| %>
+<p>
+    <%= g.label :name, 'Имя Группы' %><br>
+</p>
+<p>
+ <%= g.text_field :name %>
+  </p>
+  <p>
+
+<%= g.check_box :super %> 
+  </p>
+ <%= g.submit "Добавить"%>
+<% end %>
+</div>
+</div>
+<div class="form-group">
+ 
+<div class="col-md-4">
+<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">...</button>
+ </div>
+</div>
+
+
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Редактировать права Группы</h4>
+        </div>
+        <div class="modal-body">
+<%= render 'groups'%>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+
+      </div>
+
+
+</div>

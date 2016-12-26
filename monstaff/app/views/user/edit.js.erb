@@ -1,0 +1,35 @@
+$(".edit_test").empty();
+$("#<%= @user.id%>").html("<%= j render ('form') %>");
+
+
+var checkExist = setInterval(function() {
+   if ($('#ok').length) {
+      
+      $('#ok').click(function(){
+var t = $("#registerSubmit").find('input[type=submit]');
+
+ var name = $('input[name="user[fullname]"]').val();
+var phone = $('input[name="user[phone]"]').val();
+var mail = $('input[name="user[mail]"]').val();
+var pass = $('input[name="user[pass_valid]"]').val();
+$.ajax({
+   url: "user/<%= @user.id%>",
+   type: "put",
+   dataType: "script" ,
+   //data: {_method: 'patch', user: { fullname: "Filip", phone: "9674041112" } },
+   data: {user: {fullname: name, phone: phone, mail: mail, pass_valid: pass}},
+   success: function(response) {
+     // alert("ok");
+      //$( "#my4" ).append(response);
+      $(".edit_test").empty();
+      //$('#result').html(response.success);
+   }
+ });
+
+
+
+      });
+      clearInterval(checkExist);
+   }
+}, 100); // check every 100ms
+//.html("<%= j render 'form'%>");

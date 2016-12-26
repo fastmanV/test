@@ -1,0 +1,27 @@
+
+<%#= javascript_include_tag 'application' %>
+<%#= form_for :user, url: user_path(@user), method: :patch, :html => {:id=>"registerSubmit"}, remote: true do |f| %>
+<%= form_for :user, url: shortupdate_path(@user), method: :patch, :html => {:id=>"registerSubmit"}, remote: true do |f| %>
+
+<td >
+<%= f.text_field :fullname %>
+<%= f.hidden_field :pass_valid, :value => current_user.passactive %>
+</td>
+
+
+<td style="width: 30%;"><%= f.text_field :phone   %>
+</td>
+
+<td class="text-center" >
+</td>
+
+<td >
+<%= f.text_field :mail   %>
+</td>
+
+<td >
+<%#= f.submit ":" %>
+<button id="ok" style="color: blue;">ok</button>
+</td>
+<% end %>                                   
+

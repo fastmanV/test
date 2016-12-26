@@ -1,0 +1,38 @@
+
+
+<div class="container">
+    <div class="span5 fill">
+
+<h2 style="text-align: center; font-size: 19pt; font-weight: bold; margin: 2.5% 0% 2.5% 0%;"> Отпуска: </h2>
+
+
+
+
+<table class="table table-striped">
+
+<tr style="width:100%;">
+<td style="width: 30%; text-align:center; ">Ф.И.О.</td>
+<td style="width: 30%; text-align:center; ">Начало отпуска</td>
+<td style="width: 40%; text-align:center; ">Конец отпуска</td>
+</tr>
+</table>
+
+    <% show_vacation(@vacation).each do |region, username| %>
+<div  style="text-align: center; font-size: 15pt; font-weight: bold; margin: 2.5% 0% 2.5% 0%;"><%= region %>:</div>
+<table class="table table-striped">
+<% username.each do |fullname|%>
+
+<tr >
+<td style="width: 30%; text-align:center"><%= fullname[:username]%></td>
+<td style="width: 30%; text-align:center ;word-wrap:break-word; "><%=  %></td>
+<td style="width: 40%; text-align:center;"><%=  %></td>
+
+</tr>
+
+<% end %>
+</table>
+    <% end %>
+
+</div>
+</div>
+
